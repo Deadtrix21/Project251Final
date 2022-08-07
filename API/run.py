@@ -3,6 +3,7 @@ from routes import index, users
 
 app = FlaskApplication()
 
+
 # * Loads the program SEGMENTS
 app.load_blueprint(index.main)
 app.load_blueprint(users.main)

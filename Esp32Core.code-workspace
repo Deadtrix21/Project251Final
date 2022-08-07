@@ -1,0 +1,22 @@
+{
+	"folders": [
+		{
+			"path": "API"
+		},
+		{
+			"path": "Docs"
+		},
+		{
+			"path": "Esp32 Sketch"
+		},
+		{
+			"path": "Front"
+		},
+		{
+			"path": "."
+		}
+	],
+	"settings": {
+		"hide-files.files": []
+	}
+}

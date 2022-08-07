@@ -8,11 +8,13 @@ plugins:
       uri: https://github.com/trunk-io/plugins
 lint:
   enabled:
-    - black@22.10.0
     - git-diff-check
-    - prettier@2.7.1
+    - black@22.10.0
+    - markdownlint@0.32.2
+    - svgo@3.0.0
     - flake8@5.0.4
     - gitleaks@8.15.0
+    - prettier@2.7.1
     - isort@5.10.1
 runtimes:
   enabled:
