@@ -93,7 +93,13 @@ app.get("/devices", async function (req, res) {
     }, 10000)
 });
 
+app.get("/devices", async function (req, res) {
+    let dbArray = []
 
+    setTimeout(()=>{
+        res.json({data: dbArray})
+    }, 10000)
+});
 
 
 app.listen(PORT, () => {
