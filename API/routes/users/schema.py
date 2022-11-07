@@ -1,24 +1,32 @@
 from base import reClass
 
-
 SchemaString = reClass.GraphqlString(
-"""
+    """
     input LoginSignUp {
         email       :String!
         password    :String!
     }
+    type Token {
+        expire : String
+        token : String
+    }
     type UserDetails{
         email       : String!
-        expire      : String!
-        token       : String!
+        token       : Token!
     }
-
+    type UserDetail{
+        _id         : String!
+        uuid        : String!
+        email       : String!
+        password    : String!
+        token       : Token!
+    }
     type Query {
         echo(message:String!) :String!
-        Login(data:LoginSignUp):UserDetails!
+        Login(account:LoginSignUp):UserDetail
     }
     type Mutation{
-        SignUp(data:LoginSignUp):UserDetails!
+        SignUp(account:LoginSignUp):UserDetails
     }
 """
 )
