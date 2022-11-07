@@ -1,0 +1,26 @@
+mutation{
+    SignUp (
+        account : {
+            email:"test@outlook.com",
+            password:"Qwerty@2001"
+        }
+    )
+    {
+        email
+    }
+}
+
+{
+    Login (
+        account : {
+            email:"test1@outlook.com",
+            password:"Qwerty@2001"
+        }
+    )
+    {
+        email
+        password
+        token
+        
+    }
+}
