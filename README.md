@@ -2,6 +2,8 @@
 This is our final year project
 
 > # Langauges include
-> TypeScript <br />
+> TypeScript & Javascript<br />
 > C++ / Java <br />
-> JaveScript <br />
+> Python <br />
+> Nuxt.js & Vue.js <br />
+> Html & Css & Scss <br />
