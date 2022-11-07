@@ -49,11 +49,14 @@ def echo(*_, message):
 def ql_SignUp(*_, account):
     hashed = hashlib.md5(account["password"].encode()).hexdigest()
     current: UserDetails = UserDetails(
-        None, reClass.uuid.uuid4(), account["email"], hashed
+        None, reClass.uuid.uuid4(), account["email"], hashed, reClass.secrets.token_hex()
     )
-    current.token.expire = ""
-    current.token.token = ""
     if not AU.user_database_query({"email": current.email}):
+        double_check = False
+        while double_check is not True:
+            if not AU.user_database_query({"uuid": current.uuid}):
+                double_check = True
+            current.uuid = reClass.uuid.uuid4()
         entry = UserDetailsSchema().dump(current)
         AU.create_account(entry)
         reClass.pprint(entry)
@@ -72,7 +75,10 @@ def ql_Login(*_, account):
     if LoadedUsers().load(query).password != hashed:
         return
     if query is not None:
-        return query
+        entry = LoadedUsers().load(query)
+        entry.password = account["password"]
+        entry = LoadedUsers().dump(entry)
+        return entry
     else:
         return
 

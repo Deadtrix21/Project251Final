@@ -6,20 +6,16 @@ SchemaString = reClass.GraphqlString(
         email       :String!
         password    :String!
     }
-    type Token {
-        expire : String
-        token : String
-    }
     type UserDetails{
         email       : String!
-        token       : Token!
+        token       : String
     }
     type UserDetail{
         _id         : String!
         uuid        : String!
         email       : String!
         password    : String!
-        token       : Token!
+        token       : String
     }
     type Query {
         echo(message:String!) :String!
