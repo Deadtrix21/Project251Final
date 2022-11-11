@@ -1,0 +1,49 @@
+
+use('Project251');
+
+let adminAccounts = [
+    {
+  "token": "eb19e3dfc8d38923a652d61b68d60d3541ddb5d4e593ae1f0ed005e08e1658d2",
+  "uuid": "50e19c46-fef6-4c6b-bf9a-95e781055542"
+},
+{
+  "token": "befb11e22a4ba725a45e2f6dda2a3b601fe649859c4958abcb21832b44fd7f10",
+  "uuid": "690e33a6-71ef-4427-86af-61bb12f1a44a"
+},
+]
+let array = [{
+  "_id": "636d49d7eddce3e7eed3d09e",
+  "password": "d746605812a5e63888746d098e4186aa",
+  "email": "test@outlook.com",
+  "token": "eb19e3dfc8d38923a652d61b68d60d3541ddb5d4e593ae1f0ed005e08e1658d2",
+  "uuid": "50e19c46-fef6-4c6b-bf9a-95e781055542"
+},
+{
+  "_id":"636d49e1eddce3e7eed3d09f",
+  "password": "d746605812a5e63888746d098e4186aa",
+  "email": "test2@outlook.com",
+  "token": "befb11e22a4ba725a45e2f6dda2a3b601fe649859c4958abcb21832b44fd7f10",
+  "uuid": "690e33a6-71ef-4427-86af-61bb12f1a44a"
+},
+{
+  "_id": "636d49e7eddce3e7eed3d0a0",
+  "password": "d746605812a5e63888746d098e4186aa",
+  "email": "test3@outlook.com",
+  "token": "a51e8547adc6b032615542f416e031a360a5c5a79c9a17c5991b9249601be75d",
+  "uuid": "54263175-fc2b-41d0-8c71-fa4d3b856d52"
+},
+{
+  "_id": "636d49eaeddce3e7eed3d0a1",
+  "password": "d746605812a5e63888746d098e4186aa",
+  "email": "test4@outlook.com",
+  "token": "69c20d4add7c5af7892d3b30f47da368086151df857f97601f37318a542366a0",
+  "uuid": "34059ba7-1c4d-4432-8320-44bce207dc6a"
+}
+]
+
+db.Users.drop();
+db.Admins.drop();
+db.Devices.drop();
+db.Users.insertMany(array);
+db.Admins.insertMany(adminAccounts);
+
