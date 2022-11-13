@@ -2,18 +2,31 @@ from core.base import reClass
 
 SchemaString = reClass.GraphqlString(
     """
-    type Query {
-        echo(message:String!) :String!
-        deviceGet(uuid:String!): []!
+    type lists {
+            id : Int
+            current : String
+            level : String
+        
+    }
+    type info{
+        alias   : String
+        name    : String
+        uuid    : String
+        listing : [lists]
     }
 
+    type Query {
+        echo(message:String!) :String!
+        deviceGet(uuid:String!): [info]!
+    }
     input Stats{
-        current     : Int!
+        current     : String!
         level       : String!
     }
     type Mutation{
-        deviceUpdate(name:String!, num: Int!, state: Stats!): Int
+        deviceUpdate(name:String!, num: String!, state: Stats!): Int
         devicesAdd(name:String!, uuid:String!): Int!
+        sectionAlias(name:String!, uuid:String!, alias:String!): Int!
     }
 """
 )

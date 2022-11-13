@@ -19,6 +19,10 @@ export const state = () => ({
             token: '',
             uuid: '',
       },
+      aliases : {
+            alias: "",
+            obj : {}
+      }
 })
 
 export type AuthModuleState = ReturnType<typeof state>
@@ -30,6 +34,9 @@ export const getters: GetterTree<AuthModuleState, RootState> = {
       getUserEmail(state) {
             return state.details.email
       },
+      getAll(state){
+            return state.details
+      }
 }
 
 export const actions: ActionTree<AuthModuleState, RootState> = {
@@ -94,6 +101,22 @@ export const actions: ActionTree<AuthModuleState, RootState> = {
                         })
             }
       },
+      uploadAlias(vuexContext){
+            let obj = vuexContext.state.aliases.obj
+            let alias = vuexContext.state.aliases.alias
+            console.log(vuexContext.state.aliases);
+
+            let structure = `
+                  mutation{
+                        sectionAlias(
+                              name:"${obj.name}",
+                              uuid:"${obj.uuid}",
+                              alias:"${alias}"
+                        )
+                  }
+            `
+            this.$axios.post(`http://${window.location.hostname}:5000/devices`, {query: structure})
+      }
 }
 
 export const mutations: MutationTree<AuthModuleState> = {
@@ -106,4 +129,10 @@ export const mutations: MutationTree<AuthModuleState> = {
       setLogin(state, d) {
             state.isLogin = d
       },
+      setAlias(state, obj){
+            state.aliases = obj
+            console.log(obj);
+
+
+      }
 }

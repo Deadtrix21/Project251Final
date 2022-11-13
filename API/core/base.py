@@ -105,6 +105,16 @@ class DatabaseConnect:
         else:
             res = user.find_one(query, **exclude)
         return res
+    
+    def device_database_query_many(self, query, exclude=None):
+        user = self.__get_database("device")
+        res = None
+        if exclude is None:
+            res = user.find(query)
+        else:
+            res = user.find(query, **exclude)
+        return res
+    
 
     def device_database_update(self, what, query):
         user = self.__get_database("device")

@@ -45,24 +45,33 @@ let dArray = [
   {
     "alias" : "",
     "name" : "DeltaBeta0912",
-    "uuid" : ""
+    "uuid" : "50e19c46-fef6-4c6b-bf9a-95e781055542",
+    "listing" : [
+      {
+        "id": "1",
+        "current" : "1000",
+        "level" : "under water"
+      }
+    ]
+      
   },
   {
     "alias" : "",
     "name" : "AlphaBeta6912",
-    "uuid" : ""
+    "uuid" : "50e19c46-fef6-4c6b-bf9a-95e781055542",
+    "listing" : []
   },
   {
     "alias" : "",
     "name" : "BetaAlpha1242",
-    "uuid" : ""
+    "uuid" : "",
+    "listing" : []
   }
 ]
 
 
 db.Users.drop();
 db.Admins.drop();
-db.Devices.drop();
 db.Devices.drop();
 
 db.Users.insertMany(array);

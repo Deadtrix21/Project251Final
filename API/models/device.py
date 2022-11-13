@@ -1,7 +1,7 @@
 from core import reClass
 
 class DeviceDetails:
-    def __init__(self, _id="", uuid="", name="", listing={}, alias=""):
+    def __init__(self, _id="", uuid="", name="", listing=[], alias=""):
         self._id        : str = _id
         self.alias      : str = alias
         self.uuid       : str = uuid
@@ -12,7 +12,7 @@ class DeviceDetailsSchema(reClass.Schema):
     uuid        = reClass.fields.String()
     alias       = reClass.fields.String()
     name        = reClass.fields.String()
-    listing     = reClass.fields.Dict()
+    listing     = reClass.fields.Field()
 
 class LoadedDevice(DeviceDetailsSchema, reClass.Schema):
     _id = reClass.fields.Field()
