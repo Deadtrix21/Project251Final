@@ -1,28 +1,19 @@
-from base import reClass
+from core.base import reClass
 
 SchemaString = reClass.GraphqlString(
     """
-    input LoginSignUp {
-        email       :String!
-        password    :String!
-    }
-    type UserDetails{
-        email       : String!
-        token       : String
-    }
-    type UserDetail{
-        _id         : String!
-        uuid        : String!
-        email       : String!
-        password    : String!
-        token       : String
-    }
     type Query {
         echo(message:String!) :String!
-        Login(account:LoginSignUp):UserDetail
+        deviceGet(uuid:String!): []!
+    }
+
+    input Stats{
+        current     : Int!
+        level       : String!
     }
     type Mutation{
-        SignUp(account:LoginSignUp):UserDetails
+        deviceUpdate(name:String!, num: Int!, state: Stats!): Int
+        devicesAdd(name:String!, uuid:String!): Int!
     }
 """
 )

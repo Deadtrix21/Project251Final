@@ -1,20 +1,23 @@
 import { GetterTree, ActionTree, MutationTree } from 'vuex'
 import { RootState } from '~/store'
+import '@nuxtjs/axios'
+let heading = {
+      headers: {
+            'Content-Type': 'application/json',
+      },
+}
 
 export const state = () => ({
-      token: null,
-      isEmail : null,
-      isLogin: true,
-      SignUp: {
-            email: '',
-            password: '',
-            confirmPassword: '',
-            birthDate: '',
-            registerDate: '',
+      isLogin: false,
+      userDetails : {
+            email : "",
+            password : ""
       },
-      Login: {
+      details: {
             email: '',
             password: '',
+            token: '',
+            uuid: '',
       },
 })
 
@@ -22,100 +25,85 @@ export type AuthModuleState = ReturnType<typeof state>
 
 export const getters: GetterTree<AuthModuleState, RootState> = {
       isAuthed(state) {
-            return state.token != null
+            return state.details !== null && state.details.token != "" && state.details.token != undefined
       },
-      emailAuthed(state) {
-            if (state.Login.email !== ''){
-                  return state.Login.email
-            }else{
-                  return state.SignUp.email
-            }
-
+      getUserEmail(state) {
+            return state.details.email
       },
 }
 
 export const actions: ActionTree<AuthModuleState, RootState> = {
       authenticateUser(vuexContext) {
-            let authData = {email : "", password: ""}
-            let authUrl =  ""
-            if (vuexContext.state.isLogin == false) {
-                  authData = vuexContext.state.SignUp
-                  authUrl =
-                        'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyAVnJ2m4lb6DQcFD8iQgHVaKxjpvLfDNA0'
+            const item1 = vuexContext.state.userDetails.email
+            const item2 = vuexContext.state.userDetails.password
+            if (item1 === "" || item2 === ""){return}
+            console.log(2);
+
+            var structure = ''
+            if (vuexContext.state.isLogin === false) {
+                  structure = `mutation{
+                        SignUp(
+                              account : {
+                                    email: "${item1}",
+                                    password : "${item2}"
+                              }
+                        ){
+                              uuid
+                              email
+                              password
+                              token
+                        }
+                  }`
                   this.$axios
-                        .get(
-                              'http://localhost:8001/editcreate/?email=' +
-                                    authData.email
-                        )
-                        .then()
+                        .post(`http://${window.location.hostname}:5000/users`, {query: structure})
+                        .then((data) => {
+                              try {
+                                    vuexContext.commit("setDetails", data.data.data.SignUp)
+                                    console.log(data);
+
+                              } catch {}
+                        })
                         .catch((e) => {
-                              console.log('oops')
+                              console.log(e)
                         })
             } else {
-                  authData = vuexContext.state.Login
-
-                  authUrl =
-                        'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyAVnJ2m4lb6DQcFD8iQgHVaKxjpvLfDNA0'
+                  structure = `
+                        {
+                              Login(
+                                    account : {
+                                          email: "${item1}",
+                                          password : "${item2}"
+                                    }
+                              ){
+                                    uuid
+                                    email
+                                    password
+                                    token
+                              }
+                        }
+                  `
+                  this.$axios
+                        .post(`http://${window.location.hostname}:5000/users`, {query: structure})
+                        .then((data) => {
+                              try {
+                                    vuexContext.commit("setDetails", data.data.data.Login)
+                              } catch {}
+                        })
+                        .catch((e) => {
+                              console.log(e)
+                        })
             }
-            vuexContext.commit('setEmail', authData.email)
-            localStorage.setItem("isEmail", authData.email)
-            return this.$axios
-                  .post(authUrl, {
-                        email: authData.email,
-                        password: authData.password,
-                        returnSecureToken: true,
-                  })
-                  .then((res) => {
-                        vuexContext.commit('setToken', res.data.idToken)
-
-                        localStorage.setItem("token", res.data.idToken)
-                        const exp = new Date().getTime() + (res.data.expiresIn * 1000)
-                        localStorage.setItem("tokenExp", exp)
-                        vuexContext.dispatch('setLogout', res.data.expiresIn * 1000)
-                  })
-                  .catch((e) => {
-                        console.log(e)
-                  })
       },
-      setLogout(vuexContext, duration) {
-            setTimeout(() => {
-                  vuexContext.commit('clearToken')
-            }, duration)
-      },
-      initAuth(vuexContext){
-
-            const token = localStorage.getItem("token")
-            const email = localStorage.getItem("isEmail")
-            const exp = localStorage.getItem("tokenExp")
-
-            if (token != null){
-                  if (new Date().getTime() > new Date(exp).getTime()){return};
-                  console.log(new Date().getTime() >= new Date(exp));
-
-
-            }
-            vuexContext.commit("setToken", token)
-            vuexContext.commit("setEmail", email)
-      }
 }
-export const mutations: MutationTree<AuthModuleState> = {
-      setSignDetails(state, details: any) {
-            state.SignUp = details
-      },
-      setLoginDetails(state, details: any) {
-            state.Login = details
-      },
-      setToken(state, token) {
-            state.token = token
-      },
-      setEmail(state, email) {
-            state.isEmail = email
 
+export const mutations: MutationTree<AuthModuleState> = {
+      setDetails(state, d) {
+            state.details = d
       },
-      clearToken(state) {
-            state.token = null
+      setUser(state, d) {
+            state.userDetails = d
       },
-      toggleLogin(state, toggle){
-            state.isLogin = toggle
-      }
+      setLogin(state, d) {
+            state.isLogin = d
+      },
 }

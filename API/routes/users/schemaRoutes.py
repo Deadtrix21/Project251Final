@@ -1,6 +1,6 @@
 import hashlib
 
-from base import database_handler, reClass
+from core import reClass, DatabaseConnecter
 
 from models.user import LoadedUsers, UserDetails, UserDetailsSchema
 
@@ -10,34 +10,9 @@ query = reClass.TQuery()
 mutation = reClass.TMutation()
 
 
-class UserConnect:
-    def __init__(self) -> None:
-        self.__db = None
-        self.__autoconnect()
-
-    def __autoconnect(self):
-        self.__db = database_handler().connected
-
-    def __get_database(self, arg: str) -> reClass.MongoClient:
-        arg = arg.lower()
-        switch_case = {"user": self.__db["Project251"]["Users"], "shop": self.__db}
-        return switch_case.get(arg, None)
-
-    def user_database_query(self, query, exclude=None):
-        user = self.__get_database("user")
-        res = None
-        if exclude is None:
-            res = user.find_one(query)
-        else:
-            res = user.find_one(query, **exclude)
-        return res
-
-    def create_account(self, data):
-        user = self.__get_database("user")
-        user.insert_one(data)
 
 
-AU = UserConnect()
+AU = DatabaseConnecter
 
 
 @query.field("echo")
@@ -59,7 +34,9 @@ def ql_SignUp(*_, account):
             current.uuid = f"{reClass.uuid.uuid4()}"
         entry = UserDetailsSchema().dump(current)
         AU.create_account(entry)
-        reClass.pprint(entry)
+        entry = LoadedUsers().load(entry)
+        entry.password = account["password"]
+        entry = LoadedUsers().dump(entry)
         return entry
     else:
         return

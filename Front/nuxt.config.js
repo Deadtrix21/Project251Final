@@ -45,9 +45,7 @@ export default {
       // Axios module configuration: https://go.nuxtjs.dev/config-axios
       axios: {
             // Workaround to avoid enforcing hard-coded localhost:3000: https://github.com/nuxt-community/axios-module/issues/308
-            baseURL: 'https://test-project-deadtrix-default-rtdb.firebaseio.com/',
-            ApiKey : "AIzaSyAVnJ2m4lb6DQcFD8iQgHVaKxjpvLfDNA0",
-            backend: "http://localhost:8001/"
+            backend: "http//127.0.0.1:5000"
 
       },
 

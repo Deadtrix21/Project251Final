@@ -1,6 +1,6 @@
 from yachalk import chalk
-
-from base import reClass
+from flask_cors import CORS
+from core.base import reClass
 
 
 class Fl2:
@@ -25,7 +25,7 @@ class Fl2:
         try:
             self.flask.register_blueprint(blueprint)
             print(
-                f"Loading sequence for {blueprint.name} has {self.OnContinue('Loaded')}"
+                f"Loading sequence for {blueprint.name} has {self.OnContinue('Completed')}"
             )
         except Exception as ErrorOccurrence:
             print(f"Loading sequence for {blueprint.name} has {self.OnError('Failed')}")
@@ -33,7 +33,8 @@ class Fl2:
 
     #! This is the boot functions
     def __beginProgram(self):
-        self.flask.run()
+        CORS(self.flask, resources={r"*": {"origins": "*"}})
+        self.flask.run(host="0.0.0.0")
 
     def boot(self):
         self.__beginProgram()

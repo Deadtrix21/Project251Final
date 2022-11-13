@@ -1,8 +1,8 @@
 <template>
       <section>
-            <v-list-item two-line class="itmesBtn">
+            <v-list-item two-line class="itmesBtn" to="/Login">
                   <v-list-item-avatar>
-                        <v-btn icon to="/Login">
+                        <v-btn icon>
                               <v-icon v-if="!user.loggedIn">{{
                                     user.img
                               }}</v-icon>
@@ -18,21 +18,33 @@
 </template>
 
 <script>
-const def = () => {
+function dd (){
       return {
             loggedIn: false,
             img: 'mdi-account',
             name: 'Sign In',
       }
 }
-
 export default {
       props: {
             user: {
                   type: Object,
                   required: false,
-                  default: def,
+                  default: dd()
             },
+      },
+      data() {
+            return {
+
+            }
+      },
+      mounted() {
+            setInterval(()=>{
+                  var userEmail = this.$store.getters['authModule/getUserEmail']
+                  if (userEmail != undefined && userEmail != "" ){
+                        this.user.name = userEmail
+                  }
+            }, 5000)
       },
 }
 </script>

@@ -27,7 +27,7 @@
                               color="success"
                               outlined
                               class="mr-2"
-                              @click="validate()"
+                              @click="setSignUp()"
                         >
                               Sign Up
                         </v-btn>
@@ -61,6 +61,7 @@ export default {
                         .toISOString()
                         .substr(0, 10),
                   modal: false,
+                  valid: false,
                   signUp: {
                         email: '',
                         password: '',
@@ -70,9 +71,8 @@ export default {
       },
       methods: {
             setSignUp() {
-                  this.signUp.birthDate = this.date
                   if (this.signUp.confirmPassword === this.signUp.password){
-                        this.$store.commit("authModule/setSignDetails", this.signUp)
+                        this.validate()
                   }
                   else{
                         alert("Your passwords do not match");
@@ -80,16 +80,18 @@ export default {
 
             },
             validate() {
-                  this.$store.commit("authModule/toggleLogin", false)
-                  this.$store.commit("authModule/setEmail", this.email)
-                  this.setSignUp()
+                  
+                  this.$store.commit("authModule/setUser", {
+                        email: this.signUp.email,
+                        password: this.signUp.password,})
+                  this.$store.commit("authModule/setLogin",false)
+
                   this.$store.dispatch("authModule/authenticateUser");
-                  this.$router.push('/Client/')
+                  setTimeout(()=>{this.$router.push('/Client/')}, 1500)
 
             },
             reset() {
                   this.$refs.form.reset()
-                  this.$store.commit("authModule/resetSignDetails")
                   this.$router.push('/')
             },
       },

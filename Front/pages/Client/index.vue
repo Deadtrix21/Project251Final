@@ -76,7 +76,7 @@
 </template>
 <script>
 export default {
-      middleware: ['checkAuth', 'auth'],
+      middleware: [ 'auth'],
       data() {
             return {
                   core: [],

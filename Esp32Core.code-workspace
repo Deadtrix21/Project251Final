@@ -14,6 +14,10 @@
 		},
 		{
 			"path": "."
+		},
+		{
+			"name": "Esp32",
+			"path": "Esp32 Sketch/Esp32"
 		}
 	],
 	"settings": {

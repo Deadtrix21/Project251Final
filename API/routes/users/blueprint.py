@@ -1,4 +1,4 @@
-from base import reClass
+from core.base import reClass
 from .schemaRoutes import GraphQl
 
 main = reClass.Blueprint("usersMain", __name__)
@@ -15,4 +15,6 @@ def QueryLang():
         GraphQl, data, context_value={"request": reClass.request}
     )
     status_code = 200 if success else 400
-    return reClass.jsonify(result), status_code
+    response = reClass.jsonify(result)
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    return response , status_code

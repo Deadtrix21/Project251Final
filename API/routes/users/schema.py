@@ -1,4 +1,4 @@
-from base import reClass
+from core.base import reClass
 
 SchemaString = reClass.GraphqlString(
     """
@@ -22,7 +22,7 @@ SchemaString = reClass.GraphqlString(
         Login(account:LoginSignUp):UserDetail
     }
     type Mutation{
-        SignUp(account:LoginSignUp):UserDetails
+        SignUp(account:LoginSignUp):UserDetail
     }
 """
 )

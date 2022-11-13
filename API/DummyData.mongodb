@@ -41,9 +41,31 @@ let array = [{
 }
 ]
 
+let dArray = [
+  {
+    "alias" : "",
+    "name" : "DeltaBeta0912",
+    "uuid" : ""
+  },
+  {
+    "alias" : "",
+    "name" : "AlphaBeta6912",
+    "uuid" : ""
+  },
+  {
+    "alias" : "",
+    "name" : "BetaAlpha1242",
+    "uuid" : ""
+  }
+]
+
+
 db.Users.drop();
 db.Admins.drop();
 db.Devices.drop();
+db.Devices.drop();
+
 db.Users.insertMany(array);
+db.Devices.insertMany(dArray);
 db.Admins.insertMany(adminAccounts);
 

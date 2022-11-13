@@ -18,7 +18,7 @@ export default {
       components: { TheLogin, TheSignUp },
       data() {
             return {
-                  loginToggle: false,
+                  loginToggle: true,
             }
       },
       methods: {

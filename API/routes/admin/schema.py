@@ -1,4 +1,4 @@
-from base import reClass
+from core.base import reClass
 
 SchemaString = reClass.GraphqlString(
     """
@@ -6,23 +6,13 @@ SchemaString = reClass.GraphqlString(
         email       :String!
         password    :String!
     }
-    type UserDetails{
-        email       : String!
-        token       : String
-    }
-    type UserDetail{
-        _id         : String!
+
+    type Admin{
         uuid        : String!
-        email       : String!
-        password    : String!
-        token       : String
+        token       : String!
     }
     type Query {
-        echo(message:String!) :String!
-        Login(account:LoginSignUp):UserDetail
-    }
-    type Mutation{
-        SignUp(account:LoginSignUp):UserDetails
+        Login(account:LoginSignUp):Admin
     }
 """
 )

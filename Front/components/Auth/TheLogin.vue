@@ -75,19 +75,17 @@ export default {
       methods: {
             validate() {
 
-                  this.$store.commit("authModule/toggleLogin", true)
-                  this.$store.commit("authModule/setLoginDetails", {
+                  this.$store.commit("authModule/setUser", {
                         email: this.email,
                         password: this.password,
                   })
-                  this.$store.commit("authModule/setEmail", this.email)
+                  this.$store.commit("authModule/setLogin",true)
                   this.$store.dispatch("authModule/authenticateUser");
-                  this.$router.push('/Client/')
+                  setTimeout(()=>{this.$router.push('/Client/')}, 1500)
 
             },
             reset() {
                   this.$refs.form.reset()
-                  this.$store.commit("authModule/resetLoginDetails")
                   this.$router.push('/')
             },
       },
