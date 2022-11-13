@@ -1,13 +1,9 @@
 <template>
-      <div>
-
-      </div>
+      <div></div>
 </template>
 <script>
 export default {
-      middleware : "auth"
+      middleware: 'auth',
 }
 </script>
-<style lang="">
-
-</style>
+<style lang=""></style>

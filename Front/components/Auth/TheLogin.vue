@@ -74,15 +74,15 @@ export default {
       },
       methods: {
             validate() {
-
-                  this.$store.commit("authModule/setUser", {
+                  this.$store.commit('authModule/setUser', {
                         email: this.email,
                         password: this.password,
                   })
-                  this.$store.commit("authModule/setLogin",true)
-                  this.$store.dispatch("authModule/authenticateUser");
-                  setTimeout(()=>{this.$router.push('/Client/')}, 1500)
-
+                  this.$store.commit('authModule/setLogin', true)
+                  this.$store.dispatch('authModule/authenticateUser')
+                  setTimeout(() => {
+                        this.$router.push('/Client/')
+                  }, 1500)
             },
             reset() {
                   this.$refs.form.reset()

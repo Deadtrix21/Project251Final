@@ -18,7 +18,7 @@
 </template>
 
 <script>
-function dd (){
+function dd() {
       return {
             loggedIn: false,
             img: 'mdi-account',
@@ -30,18 +30,16 @@ export default {
             user: {
                   type: Object,
                   required: false,
-                  default: dd()
+                  default: dd(),
             },
       },
       data() {
-            return {
-
-            }
+            return {}
       },
       mounted() {
-            setInterval(()=>{
+            setInterval(() => {
                   var userEmail = this.$store.getters['authModule/getUserEmail']
-                  if (userEmail != undefined && userEmail != "" ){
+                  if (userEmail != undefined && userEmail != '') {
                         this.user.name = userEmail
                   }
             }, 5000)

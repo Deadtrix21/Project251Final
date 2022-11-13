@@ -71,24 +71,23 @@ export default {
       },
       methods: {
             setSignUp() {
-                  if (this.signUp.confirmPassword === this.signUp.password){
+                  if (this.signUp.confirmPassword === this.signUp.password) {
                         this.validate()
+                  } else {
+                        alert('Your passwords do not match')
                   }
-                  else{
-                        alert("Your passwords do not match");
-                  }
-
             },
             validate() {
-                  
-                  this.$store.commit("authModule/setUser", {
+                  this.$store.commit('authModule/setUser', {
                         email: this.signUp.email,
-                        password: this.signUp.password,})
-                  this.$store.commit("authModule/setLogin",false)
+                        password: this.signUp.password,
+                  })
+                  this.$store.commit('authModule/setLogin', false)
 
-                  this.$store.dispatch("authModule/authenticateUser");
-                  setTimeout(()=>{this.$router.push('/Client/')}, 1500)
-
+                  this.$store.dispatch('authModule/authenticateUser')
+                  setTimeout(() => {
+                        this.$router.push('/Client/')
+                  }, 1500)
             },
             reset() {
                   this.$refs.form.reset()
