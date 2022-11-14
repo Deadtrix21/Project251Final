@@ -12,6 +12,13 @@ query = reClass.TQuery()
 
 AU = DatabaseConnecter
 
+@query.field("Users")
+def ql_Users(*_):
+    query = AU.users_database_query_many({})
+    x = []
+    for i in query:
+        x.append(i)
+    return x
 
 @query.field("Login")
 def ql_Login(*_, account):

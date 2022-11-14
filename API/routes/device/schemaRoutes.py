@@ -1,6 +1,6 @@
 import hashlib
 
-from core import reClass, DatabaseConnecter, DatabaseConnect
+from core import reClass, DatabaseConnecting, DatabaseConnect
 
 from models.user import LoadedUsers, UserDetails, UserDetailsSchema
 from models.admin import LoadedAdmin, AdminDetails, AdminDetailsSchema
@@ -13,7 +13,7 @@ query = reClass.TQuery()
 mutation = reClass.TMutation()
 
 
-AU: DatabaseConnect = DatabaseConnecter
+AU: DatabaseConnect = DatabaseConnecting
 
 
 @query.field("echo")

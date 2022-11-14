@@ -9,9 +9,9 @@ let heading = {
 
 export const state = () => ({
       isLogin: false,
-      userDetails : {
-            email : "",
-            password : ""
+      userDetails: {
+            email: '',
+            password: '',
       },
       details: {
             email: '',
@@ -19,32 +19,42 @@ export const state = () => ({
             token: '',
             uuid: '',
       },
-      aliases : {
-            alias: "",
-            obj : {}
-      }
+      aliases: {
+            alias: '',
+            obj: {},
+      },
+      fulldataset: [],
 })
 
 export type AuthModuleState = ReturnType<typeof state>
 
 export const getters: GetterTree<AuthModuleState, RootState> = {
       isAuthed(state) {
-            return state.details !== null && state.details.token != "" && state.details.token != undefined
+            return (
+                  state.details !== null &&
+                  state.details.token != '' &&
+                  state.details.token != undefined
+            )
       },
       getUserEmail(state) {
             return state.details.email
       },
-      getAll(state){
+      getAll(state) {
             return state.details
-      }
+      },
+      getAllUser(state) {
+            return state.fulldataset
+      },
 }
 
 export const actions: ActionTree<AuthModuleState, RootState> = {
       authenticateUser(vuexContext) {
             const item1 = vuexContext.state.userDetails.email
             const item2 = vuexContext.state.userDetails.password
-            if (item1 === "" || item2 === ""){return}
-            console.log(2);
+            if (item1 === '' || item2 === '') {
+                  return
+            }
+            console.log(2)
 
             var structure = ''
             if (vuexContext.state.isLogin === false) {
@@ -62,12 +72,16 @@ export const actions: ActionTree<AuthModuleState, RootState> = {
                         }
                   }`
                   this.$axios
-                        .post(`http://${window.location.hostname}:5000/users`, {query: structure})
+                        .post(`http://${window.location.hostname}:5000/users`, {
+                              query: structure,
+                        })
                         .then((data) => {
                               try {
-                                    vuexContext.commit("setDetails", data.data.data.SignUp)
-                                    console.log(data);
-
+                                    vuexContext.commit(
+                                          'setDetails',
+                                          data.data.data.SignUp
+                                    )
+                                    console.log(data)
                               } catch {}
                         })
                         .catch((e) => {
@@ -82,18 +96,23 @@ export const actions: ActionTree<AuthModuleState, RootState> = {
                                           password : "${item2}"
                                     }
                               ){
+                                    _id
                                     uuid
                                     email
-                                    password
                                     token
                               }
                         }
                   `
                   this.$axios
-                        .post(`http://${window.location.hostname}:5000/users`, {query: structure})
+                        .post(`http://${window.location.hostname}:5000/users`, {
+                              query: structure,
+                        })
                         .then((data) => {
                               try {
-                                    vuexContext.commit("setDetails", data.data.data.Login)
+                                    vuexContext.commit(
+                                          'setDetails',
+                                          data.data.data.Login
+                                    )
                               } catch {}
                         })
                         .catch((e) => {
@@ -101,10 +120,10 @@ export const actions: ActionTree<AuthModuleState, RootState> = {
                         })
             }
       },
-      uploadAlias(vuexContext){
+      uploadAlias(vuexContext) {
             let obj = vuexContext.state.aliases.obj
             let alias = vuexContext.state.aliases.alias
-            console.log(vuexContext.state.aliases);
+            console.log(vuexContext.state.aliases)
 
             let structure = `
                   mutation{
@@ -115,8 +134,34 @@ export const actions: ActionTree<AuthModuleState, RootState> = {
                         )
                   }
             `
-            this.$axios.post(`http://${window.location.hostname}:5000/devices`, {query: structure})
-      }
+            this.$axios.post(
+                  `http://${window.location.hostname}:5000/devices`,
+                  { query: structure }
+            )
+      },
+      getAllUsers(vuexContext) {
+            let structure = `
+            {
+                  Users{
+                        _id
+                        uuid
+                        email
+                        password
+                        token
+                  }
+            }
+            `
+            this.$axios
+                  .post(`http://${window.location.hostname}:5000/admins`, {
+                        query: structure,
+                  })
+                  .then((res) => {
+                        vuexContext.commit(
+                              'setDataset',
+                               res.data.data.Users
+                        )
+                  })
+      },
 }
 
 export const mutations: MutationTree<AuthModuleState> = {
@@ -129,10 +174,12 @@ export const mutations: MutationTree<AuthModuleState> = {
       setLogin(state, d) {
             state.isLogin = d
       },
-      setAlias(state, obj){
+      setAlias(state, obj) {
             state.aliases = obj
-            console.log(obj);
+            console.log(obj)
+      },
+      setDataset(state, obj) {
+            state.fulldataset = obj
 
-
-      }
+      },
 }
