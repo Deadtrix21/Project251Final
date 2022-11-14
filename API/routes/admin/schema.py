@@ -19,6 +19,7 @@ SchemaString = reClass.GraphqlString(
         token       : String
     }
     type Query {
+        DelUsers(email:String!):Int!
         Login(account:LoginSignUp):Admin
         Users:[UserDetail]
     }

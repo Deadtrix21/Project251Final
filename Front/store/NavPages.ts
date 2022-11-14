@@ -5,11 +5,12 @@ export const state = () => ({
       pages: [
             { name: 'Home',         path: '/',              mdi: 'mdi-home' },
             { name: 'Client',       path: '/Client',        mdi: 'mdi-account' },
+            { name: 'Admin',        path: '/Admin',         mdi: 'mdi-home' },
             { name: 'About',        path: '/About',         mdi: 'mdi-contacts' },
             { name: 'Settings',     path: '/Settings',      mdi: 'mdi-cog-outline' },
       ],
       admin : [
-            { name: 'Admin Home',         path: '/Admin',    mdi: 'mdi-home' },
+
             { name: 'Add Device',         path: '/Admin/',         mdi: 'mdi-source-branch-plus' },
             { name: 'Remove Device',      path: '/Admin/',         mdi: 'mdi-source-branch-minus' },
 

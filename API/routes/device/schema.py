@@ -18,6 +18,7 @@ SchemaString = reClass.GraphqlString(
     type Query {
         echo(message:String!) :String!
         deviceGet(uuid:String!): [info]!
+        deviceGetAll:[info]
     }
     input Stats{
         current     : String!
@@ -27,6 +28,9 @@ SchemaString = reClass.GraphqlString(
         deviceUpdate(name:String!, num: String!, state: Stats!): Int
         devicesAdd(name:String!, uuid:String!): Int!
         sectionAlias(name:String!, uuid:String!, alias:String!): Int!
+
+        deviceDelete(word:String!,):Int
+        deviceLink(name:String!, uuid:String!):Int
     }
 """
 )

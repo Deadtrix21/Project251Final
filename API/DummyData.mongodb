@@ -5,11 +5,7 @@ let adminAccounts = [
     {
   "token": "eb19e3dfc8d38923a652d61b68d60d3541ddb5d4e593ae1f0ed005e08e1658d2",
   "uuid": "50e19c46-fef6-4c6b-bf9a-95e781055542"
-},
-{
-  "token": "befb11e22a4ba725a45e2f6dda2a3b601fe649859c4958abcb21832b44fd7f10",
-  "uuid": "690e33a6-71ef-4427-86af-61bb12f1a44a"
-},
+}
 ]
 let array = [{
   "_id": "636d49d7eddce3e7eed3d09e",
@@ -51,6 +47,16 @@ let dArray = [
         "id": "1",
         "current" : "1000",
         "level" : "under water"
+      },
+      {
+        "id": "2",
+        "current" : "1000",
+        "level" : "under water"
+      },
+      {
+        "id": "3",
+        "current" : "1000",
+        "level" : "under water"
       }
     ]
       
@@ -59,7 +65,13 @@ let dArray = [
     "alias" : "",
     "name" : "AlphaBeta6912",
     "uuid" : "50e19c46-fef6-4c6b-bf9a-95e781055542",
-    "listing" : []
+    "listing" : [
+      {
+        "id": "1",
+        "current" : "0",
+        "level" : "bone dry"
+      }
+    ]
   },
   {
     "alias" : "",

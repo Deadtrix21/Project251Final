@@ -136,6 +136,10 @@ class DatabaseConnect:
         user = self.__get_database("device")
         res = user.delete_one(query)
 
+    def user_database_del(self, query):
+        user = self.__get_database("user")
+        res = user.delete_one(query)
+
     def create_account(self, data):
         user = self.__get_database("user")
         user.insert_one(data)

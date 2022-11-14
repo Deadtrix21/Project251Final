@@ -20,8 +20,17 @@ def ql_Users(*_):
         x.append(i)
     return x
 
+@query.field("DelUsers")
+def ql_DelUsers(*_, email):
+    try:
+        AU.user_database_del({"email": email})
+        return 1
+    except Exception:
+        return 0
+
 @query.field("Login")
 def ql_Login(*_, account):
+    reClass.pprint(account)
     current = UserDetails(
         _id=None, uuid=None, email=account["email"], password=account["password"]
     )

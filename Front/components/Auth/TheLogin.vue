@@ -80,6 +80,7 @@ export default {
                   })
                   this.$store.commit('authModule/setLogin', true)
                   this.$store.dispatch('authModule/authenticateUser')
+                  this.$store.dispatch('authModule/getAdminUser')
                   setTimeout(() => {
                         this.$router.push('/Client/')
                   }, 1500)

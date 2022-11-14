@@ -27,6 +27,33 @@ def ql_deviceGet(*_, uuid):
     return query
 
 
+@query.field("deviceGetAll")
+def ql_deviceGetAll(*_):
+    query = AU.device_database_query_many({})
+    x = []
+    for i in query:
+        x.append(i)
+    return x
+
+
+@mutation.field("deviceDelete")
+def ql_deviceDelete(*_, word):
+    try:
+        AU.device_database_del({"name": word})
+        print(AU.device_database_query({"name": word}))
+        return 1
+    except Exception:
+        return 0
+
+    
+@mutation.field("deviceLink")
+def ql_deviceLink(*_, name, uuid):
+    try:
+        AU.device_database_update({"name": name}, {"uuid": uuid})
+        return 1
+    except Exception:
+        return 0
+
 @mutation.field("sectionAlias")
 def ql_sectionAlias(*_, name, uuid, alias):
     try:

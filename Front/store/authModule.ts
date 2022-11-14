@@ -7,6 +7,8 @@ let heading = {
       },
 }
 
+
+
 export const state = () => ({
       isLogin: false,
       userDetails: {
@@ -24,9 +26,23 @@ export const state = () => ({
             obj: {},
       },
       fulldataset: [],
+      fulldeviceSet: [],
+      AdminDetails : {
+            isAdmin : false,
+            details : {
+                  uuid : "",
+                  token : ""
+            }
+      },
+      deleteAccountEmail: "",
+      devices : {
+            link : '',
+            name : ""
+      }
 })
 
 export type AuthModuleState = ReturnType<typeof state>
+
 
 export const getters: GetterTree<AuthModuleState, RootState> = {
       isAuthed(state) {
@@ -35,6 +51,9 @@ export const getters: GetterTree<AuthModuleState, RootState> = {
                   state.details.token != '' &&
                   state.details.token != undefined
             )
+      },
+      isAdmin(state){
+            return state.AdminDetails
       },
       getUserEmail(state) {
             return state.details.email
@@ -45,7 +64,11 @@ export const getters: GetterTree<AuthModuleState, RootState> = {
       getAllUser(state) {
             return state.fulldataset
       },
+      getAllDevices(state) {
+            return state.fulldeviceSet
+      },
 }
+
 
 export const actions: ActionTree<AuthModuleState, RootState> = {
       authenticateUser(vuexContext) {
@@ -162,7 +185,122 @@ export const actions: ActionTree<AuthModuleState, RootState> = {
                         )
                   })
       },
+      getAllDevice(vuexContext) {
+            let structure = `
+            {
+                  deviceGetAll{
+                        alias
+                        name
+                        uuid
+                  }
+            }
+            `
+            this.$axios
+                  .post(`http://${window.location.hostname}:5000/devices`, {
+                        query: structure,
+                  })
+                  .then((res) => {
+                        vuexContext.commit(
+                              'setDevices',
+                               res.data.data.deviceGetAll
+                        )
+                  })
+      },
+      getAdminUser(vuexContext){
+            const item1 = vuexContext.state.userDetails.email
+            const item2 = vuexContext.state.userDetails.password
+            let structure = `
+            {
+                  Login(
+                        account: {
+                              email : "${item1}",
+                              password : "${item2}"
+                        }
+                  ){
+                        token
+                        uuid
+                  }
+            }
+            `
+            this.$axios
+                  .post(`http://${window.location.hostname}:5000/admins`, {
+                        query: structure,
+                  })
+                  .then((res) => {
+                        let obj = ""
+                        if (res.data.data.Login == null){
+                              obj = {
+                                    isAdmin : false,
+                                    details : null
+                              }
+                        }
+                        else{
+                              obj = {
+                                    isAdmin : true,
+                                    details : {
+                                          uuid : res.data.data.Login.uuid,
+                                          token : res.data.data.Login.token
+                                    }
+                              }
+                        }
+
+                        vuexContext.commit(
+                              'setAdmin',
+                              obj
+                        )
+                  })
+      },
+      deleteUserAccount(vuexContext){
+            const item1 = vuexContext.state.deleteAccountEmail
+            let structure = `
+            {
+                  DelUsers(
+                        email:"${item1}"
+                        )
+            }
+            `
+            this.$axios
+                  .post(`http://${window.location.hostname}:5000/admins`, {
+                        query: structure,
+                  })
+                  .then((res) => {
+                        return res.data.data.DelUsers
+                  })
+      },
+      deleteDeviceAccount(vuexContext){
+            const item1 = vuexContext.state.devices.name
+            console.log(item1);
+
+            let structure = `
+            mutation{
+                  deviceDelete(
+                        word:"${item1}"
+                  )
+            }
+            `
+            this.$axios
+                  .post(`http://${window.location.hostname}:5000/devices`, {
+                        query: structure,
+                  })
+      },
+      linkDeviceAccount(vuexContext){
+            const item1 = vuexContext.state.devices.link
+            const item2 = vuexContext.state.devices.name
+            let structure = `
+            mutation{
+                  deviceLink(
+                        name:"${item2}",
+                        uuid:"${item1}"
+                  )
+            }
+            `
+            this.$axios
+                  .post(`http://${window.location.hostname}:5000/devices`, {
+                        query: structure,
+                  })
+      }
 }
+
 
 export const mutations: MutationTree<AuthModuleState> = {
       setDetails(state, d) {
@@ -176,10 +314,23 @@ export const mutations: MutationTree<AuthModuleState> = {
       },
       setAlias(state, obj) {
             state.aliases = obj
-            console.log(obj)
       },
       setDataset(state, obj) {
             state.fulldataset = obj
-
       },
+      setAdmin(state, obj) {
+            state.AdminDetails = obj
+      },
+      setDeleteAccount(state, obj) {
+            state.deleteAccountEmail = obj
+      },
+      setDevices(state, obj){
+            state.fulldeviceSet = obj
+      },
+      setLinkDevice(state, obj){
+            state.devices = obj
+      },
+      setDeleteDevice(state, obj){
+            state.devices.name = obj
+      }
 }
